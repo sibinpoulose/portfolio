@@ -6,7 +6,7 @@
 * License: https://bootstrapmade.com/license/
 */
 
-(function() {
+(function () {
   "use strict";
 
   /**
@@ -50,7 +50,7 @@
    * Toggle mobile nav dropdowns
    */
   document.querySelectorAll('.navmenu .toggle-dropdown').forEach(navmenu => {
-    navmenu.addEventListener('click', function(e) {
+    navmenu.addEventListener('click', function (e) {
       e.preventDefault();
       this.parentNode.classList.toggle('active');
       this.parentNode.nextElementSibling.classList.toggle('dropdown-active');
@@ -110,7 +110,7 @@
     new Waypoint({
       element: item,
       offset: '80%',
-      handler: function(direction) {
+      handler: function (direction) {
         let progress = item.querySelectorAll('.progress .progress-bar');
         progress.forEach(el => {
           el.style.width = el.getAttribute('aria-valuenow') + '%';
@@ -128,7 +128,7 @@
    * Init swiper sliders
    */
   function initSwiper() {
-    document.querySelectorAll(".init-swiper").forEach(function(swiperElement) {
+    document.querySelectorAll(".init-swiper").forEach(function (swiperElement) {
       let config = JSON.parse(
         swiperElement.querySelector(".swiper-config").innerHTML.trim()
       );
@@ -153,13 +153,13 @@
   /**
    * Init isotope layout and filters
    */
-  document.querySelectorAll('.isotope-layout').forEach(function(isotopeItem) {
+  document.querySelectorAll('.isotope-layout').forEach(function (isotopeItem) {
     let layout = isotopeItem.getAttribute('data-layout') ?? 'masonry';
     let filter = isotopeItem.getAttribute('data-default-filter') ?? '*';
     let sort = isotopeItem.getAttribute('data-sort') ?? 'original-order';
 
     let initIsotope;
-    imagesLoaded(isotopeItem.querySelector('.isotope-container'), function() {
+    imagesLoaded(isotopeItem.querySelector('.isotope-container'), function () {
       initIsotope = new Isotope(isotopeItem.querySelector('.isotope-container'), {
         itemSelector: '.isotope-item',
         layoutMode: layout,
@@ -168,8 +168,8 @@
       });
     });
 
-    isotopeItem.querySelectorAll('.isotope-filters li').forEach(function(filters) {
-      filters.addEventListener('click', function() {
+    isotopeItem.querySelectorAll('.isotope-filters li').forEach(function (filters) {
+      filters.addEventListener('click', function () {
         isotopeItem.querySelector('.isotope-filters .filter-active').classList.remove('filter-active');
         this.classList.add('filter-active');
         initIsotope.arrange({
@@ -184,3 +184,56 @@
   });
 
 })();
+function validate() {
+  let name = document.getElementById("name-field");
+  let email = document.getElementById("email-field")
+  let subject = document.getElementById("subject-field")
+  let message = document.getElementById("message-field")
+  let namealert = document.getElementById("nameerror");
+  let emailalert = document.getElementById("emailerror")
+  let subjectalert = document.getElementById("subjecterror");
+  let messagealert = document.getElementById("messageerror");
+  namealert.innerText = "";
+  emailalert.innerText = "";
+  subjectalert.innerText = "";
+  messagealert.innerText = "";
+
+
+  if (name.value.trim() === "") {
+    namealert.innerText = "name is mandatory"
+    name.focus();
+    return false;
+  }
+  else if (!/^[A-Za-z\s]+$/.test(name.value.trim())) {
+    namealert.innerText = "Enter a valid name (letters and spaces only).";
+    name.focus();
+    return false;
+  }
+  else if(name.value.length<3){
+    namealert.innerText="enter a valid name";
+    name.focus();
+    return false;
+  }
+  if (email.value.trim() === "") {
+    emailalert.innerText = "email is mandatory"
+    email.focus();
+    return false;
+  } else if (!/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(email.value.trim())) {
+    emailerror.innerText = "Enter a valid email.";
+    email.focus();
+    return false;
+  }
+  if (subject.value.trim() === "") {
+    subjectalert.innerText = "Subject is mandatory";
+    subject.focus();
+    return false;
+  }
+
+  // Message validation
+  if (message.value.trim() === "") {
+    messagealert.innerText = "message should not be empty";
+    message.focus();
+    return false;
+  }
+  return true;
+}
